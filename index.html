@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ thống quản trị</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <!-- Modal form xin phép -->
+  <div id="modal-xinphep" class="modal" style="display:none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header"><span style="display:inline-flex;align-items:center"> <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" stroke="#1976ff" stroke-width="2"/><path d="M8 11h8M8 15h5" stroke="#1976ff" stroke-width="2" stroke-linecap="round"/></svg> </span> Đơn xin phép</div>
+      <form id="xinphepForm" autocomplete="off">
+        <div class="modal-body form-fields">
+          <div class="form-row">
+            <label for="xp_hoten">Họ tên</label>
+            <input id="xp_hoten" name="hoten" placeholder="Nhập họ tên" />
+          </div>
+          <div class="form-row">
+            <label for="xp_ngay">Ngày xin phép</label>
+            <input id="xp_ngay" name="ngay" type="date" />
+          </div>
+          <div class="form-row">
+            <label for="xp_loaiphep">Loại phép</label>
+            <select id="xp_loaiphep" name="loaiphep">
+              <option value="Nghỉ phép">Nghỉ phép</option>
+              <option value="Nghỉ ốm">Nghỉ ốm</option>
+              <option value="Nghỉ việc riêng">Nghỉ việc riêng</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="xp_lydo">Lý do</label>
+            <input id="xp_lydo" name="lydo" placeholder="Nhập lý do" />
+          </div>
+          <div class="form-row">
+            <label for="xp_ghichu">Ghi chú</label>
+            <input id="xp_ghichu" name="ghichu" placeholder="Ghi chú thêm (nếu có)" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="action-btn btn-success"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Gửi</button>
+          <button type="button" id="modalXinphepCancel" class="action-btn">Huỷ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="app" class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo">SOF</div>
+        <div class="system-name">LÊ MAI THIÊN THU</div>
+      </div>
+      <nav class="menu" id="menu">
+        <div class="menu-section">PHẦN QUẢN TRỊ</div>
+        <ul>
+          <li class="menu-group">
+            <button class="group-toggle" data-group>
+              <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span>MỤC CHUNG</span>
+              <svg class="expand-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="submenu">
+              <li><a href="#" data-page="congty">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7 9h10M7 13h10M7 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Công ty</span>
+              </a></li>
+              <li><a href="#" data-page="phongban">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Phòng ban</span>
+              </a></li>
+              <li><a href="#" data-page="quocgia">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Quốc gia</span>
+              </a></li>
+              <li><a href="#" data-page="tiente">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 6v12M8 10h8M8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Tiền tệ</span>
+              </a></li>
+              <li><a href="#" data-page="cauhinh">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Cấu hình chung hệ thống</span>
+              </a></li>
+              <li class="menu-group">
+                <button class="group-toggle" data-group>
+                  <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M14 2v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Biểu mẫu</span>
+                  <svg class="expand-icon" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <ul class="submenu">
+                  <li><a href="#" data-page="bieumau_danhsach">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Danh sách biểu mẫu</span>
+                  </a></li>
+                  <li><a href="#" data-page="bieumau_taomoi">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Tạo mới biểu mẫu</span>
+                  </a></li>
+                  <li><a href="#" data-page="bieumau_phanloai">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M6 12h12M9 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Phân loại biểu mẫu</span>
+                  </a></li>
+                </ul>
+              </li>
+
+              <li class="menu-group">
+                <button class="group-toggle" data-group>
+                  <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                    <rect x="6" y="14" width="4" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                    <rect x="14" y="10" width="4" height="10" rx="1" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span>Điều khiển sản phẩm</span>
+                  <svg class="expand-icon" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <ul class="submenu">
+                  <li><a href="#" data-page="sp_danhmuc">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                    <span>Danh mục sản phẩm</span>
+                  </a></li>
+                  <li><a href="#" data-page="sp_nhom">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/><rect x="13" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                    <span>Nhóm sản phẩm</span>
+                  </a></li>
+                  <li><a href="#" data-page="sp_tonkho">
+                    <svg class="menu-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 7h18M3 12h18M7 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Quản lý tồn kho</span>
+                  </a></li>
+                </ul>
+              </li>
+              <li><a href="#" data-page="taodonxinphep">
+                <svg class="menu-icon" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <path d="M9 11H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-2M9 11V9a2 2 0 1 1 4 0v2M9 11h6" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Tạo đơn xin phép</span>
+              </a></li>
+            </ul>
+          </li>
+          <li><a href="#" data-page="tailieu">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>TÀI LIỆU</span>
+          </a></li>
+          <li><a href="#" data-page="nhansu">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>NHÂN SỰ</span>
+          </a></li>
+          <li><a href="#" data-page="chamcong">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>CHẤM CÔNG & TIỀN LƯƠNG</span>
+          </a></li>
+          <li><a href="#" data-page="ketoan">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>KẾ TOÁN</span>
+          </a></li>
+          <li><a href="#" data-page="qlcongviec">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>QUẢN LÝ CÔNG VIỆC</span>
+          </a></li>
+          <li><a href="#" data-page="qlkho">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>QUẢN LÝ KHO</span>
+          </a></li>
+          <li><a href="#" data-page="kinhdoanh">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>KINH DOANH</span>
+          </a></li>
+          <li><a href="#" data-page="baocao">
+            <svg class="menu-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M3 3v18h18M9 17V9M13 17v-6M17 17V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>BÁO CÁO</span>
+          </a></li>
+        </ul>
+        <div class="bottom-box">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>GIÁM ĐỐC</span>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="left-actions">
+          <button id="toggleSidebar" title="Thu gọn / Mở rộng">☰</button>
+          <button id="goBack" title="Quay lại" disabled>⟨</button>
+          <!-- Home icon (SVG) replacing the button; keeps id 'goHome' for JS hooks -->
+          <svg id="goHome" title="Trang chủ" role="button" tabindex="0" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;cursor:pointer;">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z" fill="#000000"></path>
+            </g>
+          </svg>
+        </div>
+        <div class="tab-bar-wrapper">
+          <div class="tab-scroll-btn" id="tabScrollPrev">❮</div>
+            <ul class="tab-bar" id="tabBar"></ul>
+          <div class="tab-scroll-btn" id="tabScrollNext">❯</div>
+        </div>
+        <div class="right-actions">
+          <div class="theme-switcher" id="themeSwitcher" style="margin-right:8px;">
+            <button id="themeBtn" class="theme-btn" aria-haspopup="true" aria-expanded="false" title="Chọn giao diện">
+              <span class="swatch" aria-hidden="true"></span>
+              <span class="label">Giao diện</span>
+              <svg class="chev" width="12" height="12" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul id="themeMenu" class="theme-menu" role="menu" aria-label="Chọn giao diện" hidden>
+              <li role="menuitem"><button data-theme="blue" class="theme-option"><span class="swatch blue"></span> <span class="label">Xanh dương</span></button></li>
+              <li role="menuitem"><button data-theme="red" class="theme-option"><span class="swatch red"></span> <span class="label">Đỏ thẫm</span></button></li>
+              <li role="menuitem"><button data-theme="green" class="theme-option"><span class="swatch green"></span> <span class="label">Xanh lá đậm</span></button></li>
+            </ul>
+          </div>
+          <div class="user-avatar" title="Tài khoản">👤</div>
+        </div>
+      </header>
+      <main class="content" id="contentArea">
+        <div class="welcome" data-initial>
+          <h1>Chào mừng</h1>
+          <p>Chọn một mục ở menu bên trái để bắt đầu.</p>
+        </div>
+      </main>
+    </div>
+  </div>    
+  <!-- Modal xác nhận xoá -->
+  <div id="modal-confirm" class="modal" style="display:none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">Xác nhận xoá</div>
+      <div class="modal-body">Bạn có chắc chắn muốn xoá dòng này?</div>
+      <div class="modal-footer">
+  <button id="modalConfirmYes" class="action-btn btn-danger">Xoá</button>
+        <button id="modalConfirmNo" class="action-btn">Huỷ</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal form thêm/sửa -->
+  <div id="modal-form" class="modal" style="display:none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+  <div class="modal-header" id="modalFormTitle"><span style="display:inline-flex;align-items:center"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" stroke="#1976ff" stroke-width="2"/><path d="M8 11h8M8 15h5" stroke="#1976ff" stroke-width="2" stroke-linecap="round"/></svg></span> <span>Thêm công ty</span></div>
+      <form id="companyForm" autocomplete="off">
+        <div class="modal-body form-fields form-horizontal">
+          <div class="form-row">
+            <label for="f_ma">Mã công ty</label>
+            <input id="f_ma" name="ma" required maxlength="10" placeholder="Nhập mã công ty" />
+          </div>
+          <div class="form-row">
+            <label for="f_ten">Tên công ty</label>
+            <input id="f_ten" name="ten" required maxlength="100" placeholder="Nhập tên công ty" />
+          </div>
+          <div class="form-row">
+            <label for="f_diachi">Địa chỉ</label>
+            <input id="f_diachi" name="diachi" maxlength="200" placeholder="Nhập địa chỉ" />
+          </div>
+          <div class="form-row">
+            <label for="f_giamdoc">Giám đốc</label>
+            <input id="f_giamdoc" name="giamdoc" maxlength="50" placeholder="Tên giám đốc" />
+          </div>
+          <div class="form-row">
+            <label for="f_dt">Điện thoại</label>
+            <input id="f_dt" name="dt" maxlength="20" placeholder="Số điện thoại" />
+          </div>
+          <div class="form-row">
+            <label for="f_fax">Fax</label>
+            <input id="f_fax" name="fax" maxlength="20" placeholder="Fax" />
+          </div>
+          <div class="form-row">
+            <label for="f_web">Web</label>
+            <input id="f_web" name="web" maxlength="50" placeholder="Địa chỉ web" />
+          </div>
+          <div class="form-row">
+            <label for="f_mst">Mã số thuế</label>
+            <input id="f_mst" name="mst" maxlength="20" placeholder="Mã số thuế" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="action-btn btn-success"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Lưu</button>
+          <button type="button" id="modalFormCancel" class="action-btn">Huỷ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="assets/js/congty.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
